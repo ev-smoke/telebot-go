@@ -4,29 +4,24 @@
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
-
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   registry: "ghcr.io"
   repository: ev-smoker/telebot-go
-  tag: "v1.0.0"
+  tag: "v1.0.0-2cc9c93"
   os: linux
   arch: amd64
-
 serviceAccount:
   create: true
   name: ""
-
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
-
 service:
   port: 80
   type: ClusterIP
-
 secret:
   name: telebotGo
   tokenKey: token
