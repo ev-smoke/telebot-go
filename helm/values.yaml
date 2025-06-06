@@ -4,30 +4,25 @@
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
-
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: evsmoker
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.1-36090e4"
+  tag: "v1.0.1-36090e4-614161e"
   arch: amd64
-
 serviceAccount:
   create: true
   name: ""
-
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
-
 service:
   port: 80
   type: ClusterIP
-
 secret:
   name: telebotGo
   tokenKey: token
