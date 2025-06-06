@@ -1,8 +1,8 @@
 APP=${shell basename $(shell git remote get-url origin)}
-REGISTRY=evsmoker
+REGISTRY=ghcr.io/ev-smoke
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETOS=linux
-TARGETARCH=arm64 # amd64
+TARGETARCH=amd64 # arm64
 
 format:
 	gofmt -s -w ./
@@ -24,11 +24,11 @@ build: format get
 
 image:
 	@echo "Building Docker image..."
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
 push:
 	@echo "Pushing Docker image..."
-	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
 clean:
 	@echo "Cleaning build artifacts..."
