@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        REPO = 'https://github.com/ev-smoke/telebot-go'
+        BRANCH = 'main'
+    }
     
     parameters {
         choice(
@@ -22,5 +26,39 @@ pipeline {
             defaultValue: false,
             description: 'Skip running linter'
         )
+    }
+
+    stages {
+        stage ("clone") {
+            steps {
+                echo '>>> Clone repository'
+                git branch: "${BRANCH}", url: "${REPO}"
+            }
+        }
+
+        stage ("build") {
+            steps {
+                echo '>>> Build packet'
+                sh 'make build'
+            }
+        }
+
+        stage ("image") {
+            steps {
+                echo '>>> Build image'
+                sh 'make image'
+            }
+        }
+
+        stage ("push") {
+            steps {
+                echo '>>> push image'
+                script {
+                    docker.withRegistry( '', 'dockerhub' ) {
+                        sh 'make push'
+                    }
+                }
+            }
+        }
     }
 }
